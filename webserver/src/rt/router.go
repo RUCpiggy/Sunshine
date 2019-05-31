@@ -25,7 +25,7 @@ func GetRouter(router *gin.Engine, db *sql.DB) {
 			})
 		} else {
 			c.JSON(200, gin.H{
-				"check": "wrong",
+				"check": "false",
 			})
 		}
 
@@ -57,9 +57,8 @@ func GetRouter(router *gin.Engine, db *sql.DB) {
 		judge = strings.Join(sliceJudge, " and ")
 		result, check := sqlite.SearchArt(db, judge)
 		if check == true {
-			resultJson := make(map[string]interface{})
-			for index, value := range result {
-				data := "data" + string(index)
+			var resultJson []gin.H
+			for _, value := range result {
 				singleResult := gin.H{
 					"artist":        value.Artist,
 					"artworkID":     value.ArtworkID,
@@ -76,7 +75,7 @@ func GetRouter(router *gin.Engine, db *sql.DB) {
 					"width":         value.Width,
 					"yearOfWork":    value.YearOfWork,
 				}
-				resultJson[data] = singleResult
+				resultJson = append(resultJson, singleResult)
 			}
 			c.JSON(200, resultJson)
 		}

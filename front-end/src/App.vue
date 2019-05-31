@@ -1,13 +1,15 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+  <SunNav></SunNav>
     <router-view/>
   </div>
 </template>
 
 <script>
+import SunNav from './components/base-components/SunNav'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {SunNav}
 }
 </script>
 
@@ -18,6 +20,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
