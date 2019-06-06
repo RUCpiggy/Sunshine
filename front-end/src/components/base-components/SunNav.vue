@@ -1,39 +1,33 @@
 <template>
 <div>
 
-<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-  <el-menu-item index="1"><a href="/" target="_blank">首页</a></el-menu-item>
-  <el-menu-item index="2"><a href="/" target="_blank">搜索</a></el-menu-item>
-  <el-menu-item index="3"><a href="/" target="_blank">详情</a></el-menu-item>
-  <el-menu-item index="4"><Login></Login></el-menu-item>
-  <el-menu-item index="5"><a href="/" target="_blank">注册</a></el-menu-item>
+<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
+  <el-menu-item index="1"><a href="/" >首页</a></el-menu-item>
+  <el-menu-item index="2"><a href="/search" >搜索</a></el-menu-item>
+  <el-menu-item index="3"><a href="/detail" >详情</a></el-menu-item>
+  <el-menu-item index="4"><sun-login>登陆</sun-login></el-menu-item>
+  <el-menu-item index="5"><sun-register>注册</sun-register></el-menu-item>
 </el-menu>
 <div class="line"></div>
-<el-row>
-  <el-col class="margin-top" :span="6">
-    <img src="../../assets/logo.jpg" height="70px">
-  </el-col>
-  <el-col class="margin-top" :span="6">
 
-  </el-col>
-</el-row>
 </div>
 </template>
 
 <script>
-import Login from './Login'
+import SunLogin from './SunLogin'
+import SunRegister from './SunRegister'
 export default {
   name: 'SunNav',
-  components: {Login},
+  components: {
+    SunLogin,
+    SunRegister
+  },
   data () {
     return {
       activeIndex: '1'
     }
   },
   methods: {
-    handleSelect (key, keyPath) {
-      console.log(key, keyPath)
-    }
   }
 }
 </script>

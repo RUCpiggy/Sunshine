@@ -35,14 +35,23 @@ func DeleteUser(db *sql.DB, userID string) {
 }
 
 func SearchUser(db *sql.DB, name string) (structure.User, bool) {
-	sql := "SELECT userID,name,email,tel,address,balance FROM users WHERE name=" + "\"" + name + "\""
+	sql := "SELECT userID,name,password,email,tel,address,balance FROM users WHERE name=" + "\"" + name + "\""
 	var user structure.User
 	row := db.QueryRow(sql)
-	row.Scan(&user.UserID, &user.Name, &user.Email, &user.Tel, &user.Address, &user.Balance)
+	row.Scan(&user.UserID, &user.Name, &user.Password, &user.Email, &user.Tel, &user.Address, &user.Balance)
 	if user.UserID != 0 {
 		return user, true
 	} else {
 		return user, false
 	}
+
+}
+
+func MaxUserID(db *sql.DB) int {
+	sql := "SELECT MAX(userID) FROM users"
+	var userID int
+	row := db.QueryRow(sql)
+	row.Scan(&userID)
+	return userID
 
 }

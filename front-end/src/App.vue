@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <SunNav></SunNav>
+  <sun-nav></sun-nav>
     <router-view/>
   </div>
 </template>

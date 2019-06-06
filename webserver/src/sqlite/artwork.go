@@ -50,7 +50,7 @@ func DeleteArt(db *sql.DB, artworkID string) {
 
 func SearchArt(db *sql.DB, judge string) ([]structure.Artwork, bool) {
 
-	sql := "SELECT * FROM artworks WHERE " + judge
+	sql := "SELECT * FROM artworks " + judge
 	rows, err := db.Query(sql)
 	checkErr(err)
 

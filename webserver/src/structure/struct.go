@@ -30,11 +30,11 @@ type Order struct {
 	TimeCreated string
 }
 type User struct {
-	UserID   int
-	Name     string
-	Email    string
-	Password string
-	Tel      string
-	Address  string
-	Balance  int
+	UserID   int    `json:"userID"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	Tel      string `json:"tel"`
+	Address  string `json:"address"`
+	Balance  int    `json:"balance"`
 }
