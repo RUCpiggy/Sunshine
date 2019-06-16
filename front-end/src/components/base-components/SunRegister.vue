@@ -6,8 +6,8 @@
       <el-form-item label="用户名" :label-width="formLabelWidth" prop="name">
         <el-input v-model="form.name" auto-complete="off"></el-input>
       </el-form-item>
-      <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-        <el-input type="password" v-model="form.password" auto-complete="off"></el-input>
+      <el-form-item label="密码" :label-width="formLabelWidth" prop="inputPassword">
+        <el-input type="password" v-model="form.inputPassword" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item label="确认密码" :label-width="formLabelWidth" prop="checkPassword">
         <el-input type="password" v-model="form.checkPassword" auto-complete="off"></el-input>
@@ -53,10 +53,13 @@
 </style>
 
 <script>
+import crypto from 'crypto'
 import SunCaptcha from './SunCaptcha'
 export default {
   name: 'SunRegister',
-  components: {SunCaptcha},
+  components: {
+    SunCaptcha
+  },
   data () {
     var vaildateName = (rule, value, callback) => {
       var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/
@@ -87,7 +90,7 @@ export default {
     var vaildatePassword2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'))
-      } else if (value !== this.form.password) {
+      } else if (value !== this.form.inputPassword) {
         callback(new Error('两次输入密码不一致'))
       } else {
         callback()
@@ -134,6 +137,7 @@ export default {
       form: {
         name: '',
         password: '',
+        inputPassword: '',
         checkPassword: '',
         email: '',
         tel: '',
@@ -146,7 +150,7 @@ export default {
         name: [
           {validator: vaildateName, trigger: 'blur', required: true}
         ],
-        password: [
+        inputPassword: [
           {validator: vaildatePassword, trigger: 'blur', required: true}
         ],
         checkPassword: [
@@ -176,6 +180,7 @@ export default {
 
   methods: {
     postRegisterInfo: function (form) {
+      this.form.password = this.getSha1(this.form.inputPassword)
       this.$refs[form].validate((valid) => {
         if (valid) {
           var that = this
@@ -224,6 +229,11 @@ export default {
         title: '错误',
         message: message
       })
+    },
+    getSha1: function (date) {
+      const hash = crypto.createHash('sha1')
+      hash.update(date)
+      return hash.digest('hex')
     }
   }
 }

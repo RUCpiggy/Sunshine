@@ -1,5 +1,24 @@
+<template>
+  <div>
+    <sun-header></sun-header>
+  </div>
+</template>
+
 <script>
+import SunHeader from './base-components/SunHeader'
 export default {
-  name: 'Search'
+  components: {
+    SunHeader
+  },
+  data () {
+    return {
+      artworks: []
+
+    }
+  },
+  name: 'Search',
+  methods: {
+
+  }
 }
 </script>

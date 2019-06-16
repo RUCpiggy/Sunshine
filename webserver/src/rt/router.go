@@ -34,19 +34,19 @@ func GetRouter(router *gin.Engine, db *sql.DB) {
 
 	router.GET("/artworks", func(c *gin.Context) {
 		artMap := make(map[string]string)
-		artMap["artworkID"] = c.Query("artworkID")
-		artMap["artist"] = c.Query("artist")
-		artMap["imageFileName"] = c.Query("imageFileName")
-		artMap["title"] = c.Query("title")
-		artMap["yearOfWork"] = c.Query("yearOfWork")
-		artMap["genre"] = c.Query("genre")
-		artMap["width"] = c.Query("width")
-		artMap["height"] = c.Query("height")
-		artMap["price"] = c.Query("price")
-		artMap["view"] = c.Query("view")
-		artMap["ownerID"] = c.Query("ownerID")
-		artMap["orderID"] = c.Query("orderID")
-		artMap["timeReleased"] = c.Query("timeReleased")
+		artMap["artworkID"] = c.Query("ArtworkID")
+		artMap["artist"] = c.Query("Artist")
+		artMap["imageFileName"] = c.Query("ImageFileName")
+		artMap["title"] = c.Query("Title")
+		artMap["yearOfWork"] = c.Query("YearOfWork")
+		artMap["genre"] = c.Query("Genre")
+		artMap["width"] = c.Query("Width")
+		artMap["height"] = c.Query("Height")
+		artMap["price"] = c.Query("Price")
+		artMap["view"] = c.Query("View")
+		artMap["ownerID"] = c.Query("OwnerID")
+		artMap["orderID"] = c.Query("OrderID")
+		artMap["timeReleased"] = c.Query("TimeReleased")
 		judge := ""
 		var sliceJudge []string
 		for index, value := range artMap {
@@ -57,29 +57,11 @@ func GetRouter(router *gin.Engine, db *sql.DB) {
 		}
 		judge = strings.Join(sliceJudge, " and ")
 		judge = " WHERE " + judge
-		result, check := sqlite.SearchArt(db, judge)
+		artworks, check := sqlite.SearchArt(db, judge)
 		if check == true {
-			var resultJson []gin.H
-			for _, value := range result {
-				singleResult := gin.H{
-					"artist":        value.Artist,
-					"artworkID":     value.ArtworkID,
-					"description":   value.Description,
-					"genre":         value.Genre,
-					"height":        value.Height,
-					"imageFileName": value.ImageFileName,
-					"orderID":       value.OrderID,
-					"ownerID":       value.OwnerID,
-					"price":         value.Price,
-					"timeReleased":  value.TimeReleased,
-					"title":         value.Title,
-					"view":          value.View,
-					"width":         value.Width,
-					"yearOfWork":    value.YearOfWork,
-				}
-				resultJson = append(resultJson, singleResult)
-			}
-			c.JSON(200, resultJson)
+			c.JSON(http.StatusOK, gin.H{"state": "T", "message": artworks})
+		} else {
+			c.JSON(http.StatusOK, gin.H{"state": "F", "message": "服务器错误"})
 		}
 	})
 
@@ -142,4 +124,16 @@ func GetRouter(router *gin.Engine, db *sql.DB) {
 			c.JSON(http.StatusOK, gin.H{"state": "F", "message": "服务器错误"})
 		}
 	})
+
+	router.GET("/detail", func(c *gin.Context) {
+		artworkID := c.Query("ArtworkID")
+		judge := " WHERE artworkID = " + artworkID
+		artworks, check := sqlite.SearchArt(db, judge)
+		if check == true {
+			c.JSON(http.StatusOK, gin.H{"state": "T", "message": artworks})
+		} else {
+			c.JSON(http.StatusOK, gin.H{"state": "F", "message": "服务器错误"})
+		}
+	})
+
 }

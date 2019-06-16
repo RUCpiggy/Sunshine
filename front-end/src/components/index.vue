@@ -1,35 +1,44 @@
 <template>
-    <div>
-        <div class="block ">
-            <el-carousel height=600px >
-            <el-carousel-item v-for="item in 4" :key="item">
-            <h3>{{ item }}</h3>
+  <div>
+    <div class="block ">
+      <el-carousel height=600px >
+        <el-carousel-item v-for="item in 4" :key="item" :style="'background-image: url(http://localhost:8080/api/img/'+artworks[item-1].ImageFileName+');'">
+          <div>
+            <p class="title">{{ artworks[item-1].Title }}</p>
+            <p v-html="artworks[item-1].Description"></p>
+            <p class="more" @click="routeTo(artworks[item-1].ArtworkID)">learn more</p>
+          </div>
 
         </el-carousel-item>
-        </el-carousel>
-        </div>
-      </div>
+      </el-carousel>
+    </div>
+    <div>
+
+    </div>
+  </div>
 </template>
 
 <style scoped>
-.el-carousel__item h3 {
-  color: #475669;
+.el-carousel__item div {
+  color: white;
   font-size: 14px;
-  opacity: 0.75;
-  line-height: 300px;
+  opacity: 1;
   margin: 0;
+  margin-top: 100px
   }
 
-.el-carousel__item:nth-child(4n+3) {
-  background-color:aqua;
-  background-image: url('http://localhost:8080/api/img/102.jpg');
+.el-carousel__item {
+  background-color:black;
   background-size: cover;
   background-position: center center;
   }
+.title{
+  font-size:30px;
+}
 
-.el-carousel__item:nth-child(2n+1) {
-
-  }
+.more:hover {
+  cursor:pointer;
+}
 
 </style>
 
@@ -43,14 +52,20 @@ export default {
   data () {
     return {
       bannerHeight: 500,
-      artwork: {
-        title: '',
-        description: '',
-        artworkID: '',
-        artist: '',
-        imageFileName: ''
-      },
-      artworks: ['', '', '', '']
+      artworks: [
+        {
+          ImageFileName: ''
+        },
+        {
+          ImageFileName: ''
+        },
+        {
+          ImageFileName: ''
+        },
+        {
+          ImageFileName: ''
+        }
+      ]
     }
   },
   mounted () {
@@ -62,19 +77,18 @@ export default {
       var that = this
       this.axios.get('/hot').then(
         function (res) {
-          for (var i = 0; i < res.data.message.length; i++) {
-            that.artwork.artist = res.data.message[i].Artist
-            that.artwork.title = res.data.message[i].Title
-            that.artwork.description = res.data.message[i].Description
-            that.artwork.artworkID = res.data.message[i].ArtworkID
-            that.artwork.imageFileName = res.data.message[i].ImageFileName
-            that.artworks[i] = that.artwork
+          if (res.data) {
+            const data = res.data.message
+            that.artworks = data
           }
         })
-      console.log(this.artworks)
+    },
+    routeTo: function (ArtworkID) {
+      this.$router.push({path: '/detail', query: { 'ArtworkID': ArtworkID }})
     }
 
   },
+
   watch: {
 
   }
