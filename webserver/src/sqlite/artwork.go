@@ -6,7 +6,7 @@ import (
 )
 
 func AddArt(db *sql.DB, args ...interface{}) {
-	sql := "Insert INTO artworks(artworkID,artist,imageFileName,title,description,yearOfWork,genre,width,height,price,view,ownerID,orderID,timeReleased) value(?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+	sql := "Insert INTO artworks(artworkID,artist,imageFileName,title,description,yearOfWork,genre,width,height,price,view,ownerID,orderID,timeReleased) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 	Insert(db, sql, args...)
 }
 
@@ -62,6 +62,40 @@ func SearchArt(db *sql.DB, judge string) ([]structure.Artwork, bool) {
 
 		err = rows.Scan(&artwork.ArtworkID, &artwork.Artist, &artwork.ImageFileName, &artwork.Title, &artwork.Description, &artwork.YearOfWork,
 			&artwork.Genre, &artwork.Width, &artwork.Height, &artwork.Price, &artwork.View, &artwork.OwnerID, &artwork.OrderID, &artwork.TimeReleased)
+
+		artworks = append(artworks, artwork)
+		//println(artwork.ArtworkID)
+	}
+	if len(artworks) != 0 {
+		return artworks, true
+	} else {
+		return artworks, false
+	}
+
+}
+
+func MaxArtworkID(db *sql.DB) int {
+	sql := "SELECT MAX(artworkID) FROM artworks"
+	var artworkID int
+	row := db.QueryRow(sql)
+	row.Scan(&artworkID)
+	return artworkID
+
+}
+
+func SearchArtInChart(db *sql.DB, judge string) ([]structure.Artwork, bool) {
+
+	sql := judge
+	rows, err := db.Query(sql)
+	checkErr(err)
+
+	//map_columns := make(map[string]string)
+	var artworks []structure.Artwork
+
+	for rows.Next() {
+		var artwork structure.Artwork
+
+		err = rows.Scan(&artwork.ArtworkID, &artwork.Title, &artwork.Description, &artwork.ImageFileName, &artwork.Price)
 
 		artworks = append(artworks, artwork)
 		//println(artwork.ArtworkID)

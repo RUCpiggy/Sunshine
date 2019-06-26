@@ -21,7 +21,7 @@
               <em>Price</em><span> : {{artwork.Price}}$</span>
             </el-row>
             <el-row>
-              <el-button size="medium">添加到购物车</el-button>
+              <chart-button :artworkID="artwork.ArtworkID"></chart-button>
             </el-row>
             <el-row type="flex" justify="center">
             <el-col :span="18">
@@ -74,10 +74,12 @@ img {
 
 <script>
 import SunHeader from './base-components/SunHeader'
+import ChartButton from './base-components/ChartButton'
 export default {
   name: 'Detail',
   components: {
-    SunHeader
+    SunHeader,
+    ChartButton
   },
   data () {
     return {
@@ -89,6 +91,7 @@ export default {
   },
   mounted () {
     this.getArtworkInfo()
+    this.$store.commit('addFoot', '详情')
   },
   methods: {
     getArtworkInfo: function () {
@@ -109,6 +112,7 @@ export default {
     },
     tmpclick: function () {
       console.log(this.artwork.Description)
+      console.log(localStorage.getItem('tocken'))
     }
   }
 }

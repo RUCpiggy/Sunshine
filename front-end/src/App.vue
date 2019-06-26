@@ -1,7 +1,10 @@
 <template>
   <div id="app">
   <sun-nav></sun-nav>
-    <router-view/>
+  <el-row type="flex" justify="center"  >
+    <el-col :span="22"><router-view/></el-col>
+  </el-row>
+
   </div>
 </template>
 

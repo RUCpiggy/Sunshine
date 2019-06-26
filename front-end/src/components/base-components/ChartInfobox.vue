@@ -9,16 +9,14 @@
             <el-col :span="12">
                 <p>{{artwork.title}}</p>
                 <p>{{artwork.artist}}</p>
+                <p class="description" v-html="artwork.description"></p>
+                <p> 价格： {{artwork.price}}</p>
+
             </el-col>
         </el-row>
+
         <el-row>
-            <p class="description" v-html="artwork.description"></p>
-        </el-row>
-        <el-row>
-            <el-col :span="12"><el-button @click="routeTo(artwork.artworkID)">查看</el-button></el-col>
-            <el-col :span="12">
-                 <chart-button :artworkID="artwork.artworkID"></chart-button>
-        </el-col>
+
         </el-row>
     </div>
 </template>

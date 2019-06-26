@@ -2,13 +2,11 @@
 <div>
 
 <el-menu  class="el-menu-demo" mode="horizontal">
-  <el-menu-item ><a href="/" >首页</a></el-menu-item>
-  <el-menu-item ><a @click="routeTo('/search')" >搜索</a></el-menu-item>
-  <el-menu-item ><a @click="routeTo('/detail')"  >详情</a></el-menu-item>
-  <el-menu-item v-if="loginStatus=='0'"><sun-login v-bind:message="loginStatus" v-on:listenLoginStatus="status">登陆</sun-login></el-menu-item>
+  <el-menu-item ><a @click="routeTo('/')" >首页</a></el-menu-item>
+  <el-menu-item ><a @click="routeTo('/chart')" >购物车</a></el-menu-item>
+  <el-menu-item ><pub-artwork>发布艺术品</pub-artwork></el-menu-item>
   <el-menu-item v-if="loginStatus=='0'"><sun-register v-bind:message="loginStatus" v-on:listenLoginStatus="status">注册</sun-register></el-menu-item>
-    <el-menu-item v-if="loginStatus=='1'" ><a @click="routeTo('/profile')">个人页面</a></el-menu-item>
-  <el-menu-item v-if="loginStatus=='1'" ><a @click="logout">登出</a></el-menu-item>
+
 </el-menu>
 <div class="line"></div>
 
@@ -20,7 +18,7 @@
 .el-menu-demo
 {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 a {
   text-decoration: none;
@@ -35,11 +33,14 @@ a {
 <script>
 import SunLogin from './SunLogin'
 import SunRegister from './SunRegister'
+import PubArtwork from './PubArtwork'
+
 export default {
   name: 'SunNav',
   components: {
     SunLogin,
-    SunRegister
+    SunRegister,
+    PubArtwork
   },
   data () {
     return {

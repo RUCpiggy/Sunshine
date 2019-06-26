@@ -5,6 +5,7 @@ import Search from '@/components/Search'
 
 import Detail from '@/components/Detail'
 import Profile from '@/components/Profile'
+import Chart from '@/components/Chart'
 
 // import login from '@/components/login'
 
@@ -32,6 +33,11 @@ export default new Router({
       path: '/profile',
       name: 'Profile',
       component: Profile
+    },
+    {
+      path: '/chart',
+      name: 'Chart',
+      component: Chart
     }
 
   ]

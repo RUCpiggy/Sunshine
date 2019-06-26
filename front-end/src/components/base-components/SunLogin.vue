@@ -85,7 +85,9 @@ export default {
               if (res.status === 200) {
                 if (res.data.state === 'T') {
                   that.openSucceess(res.data.message)
+                  localStorage.setItem('tocken', res.data.tocken)
                   that.dialogFormVisible = false
+                  that.$emit('listenLoginStatus', '1')
                 } else {
                   that.openError(res.data.message)
                 }

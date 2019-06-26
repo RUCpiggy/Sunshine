@@ -2,15 +2,19 @@
   <div>
     <div class="block ">
       <el-carousel height=600px >
-        <el-carousel-item v-for="item in 4" :key="item" :style="'background-image: url(http://localhost:8080/api/img/'+artworks[item-1].ImageFileName+');'">
+        <el-carousel-item v-for="item in 4" :key="item" :style="'background-image: url(http://localhost:8080/api/img/'+artworks[item-1].imageFileName+');'">
           <div>
-            <p class="title">{{ artworks[item-1].Title }}</p>
-            <p v-html="artworks[item-1].Description"></p>
-            <p class="more" @click="routeTo(artworks[item-1].ArtworkID)">learn more</p>
+            <p class="title">{{ artworks[item-1].title }}</p>
+            <p v-html="artworks[item-1].description"></p>
+            <p class="more" @click="routeTo(artworks[item-1].artworkID)">learn more</p>
           </div>
-
         </el-carousel-item>
       </el-carousel>
+      <el-row>
+        <el-col :span="8" v-for="item in 3" :key="item">
+          <sun-newcard :artwork="newArtworks[item-1]"></sun-newcard>
+        </el-col>
+      </el-row>
     </div>
     <div>
 
@@ -44,10 +48,13 @@
 
 <script>
 import SunNav from './base-components/SunNav'
+import SunNewcard from './base-components/SunNewcard'
+
 export default {
   name: 'Index',
   components: {
-    SunNav
+    SunNav,
+    SunNewcard
   },
   data () {
     return {
@@ -65,11 +72,25 @@ export default {
         {
           ImageFileName: ''
         }
+      ],
+      newArtworks: [
+        {
+          ImageFileName: ''
+        },
+        {
+          ImageFileName: ''
+        },
+        {
+          ImageFileName: ''
+        }
       ]
     }
   },
   mounted () {
     this.getHotArtworks()
+    this.getNewArtworks()
+    this.$store.commit('addFoot', '首页')
+    console.log(this.newArtworks)
   },
 
   methods: {
@@ -80,6 +101,16 @@ export default {
           if (res.data) {
             const data = res.data.message
             that.artworks = data
+          }
+        })
+    },
+    getNewArtworks: function () {
+      var that = this
+      this.axios.get('/new').then(
+        function (res) {
+          if (res.data) {
+            const data = res.data.message
+            that.newArtworks = data
           }
         })
     },
