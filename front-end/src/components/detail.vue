@@ -13,27 +13,27 @@
         <el-row type="flex" justify="space-between"  align="middle">
           <el-col :span="10">
             <div class="image">
-              <img :src="'http://localhost:8080/api/img/'+ artwork.ImageFileName">
+              <img :src="'http://localhost:8080/api/img/'+ artwork.imageFileName">
             </div>
           </el-col>
           <el-col :span="14">
             <el-row>
-              <em>Price</em><span> : {{artwork.Price}}$</span>
+              <em>Price</em><span> : {{artwork.price}}$</span>
             </el-row>
             <el-row>
-              <chart-button :artworkID="artwork.ArtworkID"></chart-button>
+              <chart-button :artworkID="artwork.artworkID"></chart-button>
             </el-row>
             <el-row type="flex" justify="center">
             <el-col :span="18">
               <p>Product Details</p>
               <el-divider></el-divider>
-              <el-row ><el-col :span="10">Date</el-col><el-col :span="14">{{artwork.YearOfWork}}</el-col></el-row>
+              <el-row ><el-col :span="10">Date</el-col><el-col :span="14">{{artwork.yearOfWork}}</el-col></el-row>
               <el-divider></el-divider>
-              <el-row ><el-col :span="10">Genre</el-col><el-col :span="14">{{artwork.Genre}}</el-col></el-row>
+              <el-row ><el-col :span="10">Genre</el-col><el-col :span="14">{{artwork.genre}}</el-col></el-row>
               <el-divider></el-divider>
-              <el-row ><el-col :span="10">Dimensions</el-col><el-col :span="14">{{artwork.Width}}cm X {{artwork.Height}}cm</el-col></el-row>
+              <el-row ><el-col :span="10">Dimensions</el-col><el-col :span="14">{{artwork.width}}cm X {{artwork.Height}}cm</el-col></el-row>
               <el-divider></el-divider>
-              <el-row ><el-col :span="10">Hot</el-col><el-col :span="14">{{artwork.View}} views</el-col></el-row>
+              <el-row ><el-col :span="10">Hot</el-col><el-col :span="14">{{artwork.view}} views</el-col></el-row>
               <el-divider></el-divider>
             </el-col>
             </el-row>
